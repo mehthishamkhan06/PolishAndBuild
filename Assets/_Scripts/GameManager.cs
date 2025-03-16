@@ -3,17 +3,17 @@ using TMPro; // Import TextMeshPro namespace
 
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
-    // [SerializeField] private int maxLives = 3;
+    [SerializeField] private int maxLives = 3;
     [SerializeField] private Ball ball;
     [SerializeField] private Transform bricksContainer;
     [SerializeField] private TMP_Text scoreText; // Use TMP_Text instead of Text
-    // [SerializeField] private TMP_Text livesText; // Use TMP_Text instead of Text
+    [SerializeField] private TMP_Text livesText; // Use TMP_Text instead of Text
     [SerializeField] private GameObject gameOverPanel;
 
     private int currentBrickCount;
     private int totalBrickCount;
     private int score = 0;
-    // private int currentLives;
+    private int currentLives;
 
     private void OnEnable()
     {
@@ -21,7 +21,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         ball.ResetBall();
         totalBrickCount = bricksContainer.childCount;
         currentBrickCount = bricksContainer.childCount;
-        // currentLives = maxLives;
+        currentLives = maxLives;
         UpdateUI();
     }
 
@@ -48,25 +48,25 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
     public void KillBall()
     {
-        // currentLives--;
+        currentLives--;
         UpdateUI();
 
-        // if (currentLives < 0)
-        // {
-        //     GameOver();
-        // }
-        // else
-        // {
+        if (currentLives == 0)
+        {
+            GameOver();
+        }
+        else
+        {
             ball.ResetBall();
-        // }
+        }
     }
 
     private void UpdateUI()
     {
         if (scoreText != null)
             scoreText.text = "Score: " + score;
-        // if (livesText != null)
-        //     livesText.text = "Lives: " + currentLives;
+        if (livesText != null)
+            livesText.text = "Lives: " + currentLives;
     }
 
     private void GameOver()
